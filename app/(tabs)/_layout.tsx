@@ -1,33 +1,90 @@
-import { Tabs } from 'expo-router';
-import React from 'react';
-
-import { HapticTab } from '@/components/haptic-tab';
-import { IconSymbol } from '@/components/ui/icon-symbol';
-import { Colors } from '@/constants/theme';
-import { useColorScheme } from '@/hooks/use-color-scheme';
+import { HapticTab } from "@/components/haptic-tab";
+import { Tabs } from "expo-router";
+import { BadgePercent, Home, Receipt, Tv, User } from "lucide-react-native";
+import React from "react";
 
 export default function TabLayout() {
-  const colorScheme = useColorScheme();
-
   return (
     <Tabs
       screenOptions={{
-        tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
         headerShown: false,
         tabBarButton: HapticTab,
-      }}>
+        tabBarActiveTintColor: "#00aa5b",
+        tabBarInactiveTintColor: "#888",
+      }}
+    >
       <Tabs.Screen
         name="index"
         options={{
-          title: 'Home',
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="house.fill" color={color} />,
+          title: "Home",
+          tabBarIcon: ({ color, focused }) => (
+            <Home
+              size={28}
+              // Saat aktif: stroke putih, fill hijau. Saat mati: stroke abu, fill putih.
+              color={focused ? "#fff" : color}
+              fill={focused ? color : "#fff"}
+            />
+          ),
         }}
       />
+
       <Tabs.Screen
-        name="explore"
+        name="feed"
         options={{
-          title: 'Explore',
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="paperplane.fill" color={color} />,
+          title: "Feed",
+          tabBarIcon: ({ color, focused }) => (
+            <Tv
+              size={28}
+              color={focused ? "#fff" : color}
+              fill={focused ? color : "#fff"}
+            />
+          ),
+        }}
+      />
+
+      <Tabs.Screen
+        name="promo"
+        options={{
+          title: "Promo",
+          tabBarIcon: ({ focused, color }) => {
+            const promoColor = "#ff0000";
+            return (
+              <BadgePercent
+                size={28}
+                // Jika aktif pakai putih di atas merah, jika tidak pakai warna default
+                color={focused ? "#fff" : color}
+                fill={focused ? promoColor : "#fff"}
+              />
+            );
+          },
+        }}
+      />
+
+      <Tabs.Screen
+        name="receipt"
+        options={{
+          title: "Transaksi",
+          tabBarIcon: ({ color, focused }) => (
+            <Receipt
+              size={28}
+              color={focused ? "#fff" : color}
+              fill={focused ? color : "#fff"}
+            />
+          ),
+        }}
+      />
+
+      <Tabs.Screen
+        name="profile"
+        options={{
+          title: "Profil",
+          tabBarIcon: ({ color, focused }) => (
+            <User
+              size={focused ? 28 : 26}
+              color={focused ? "#fff" : color}
+              fill={focused ? color : "#fff"}
+            />
+          ),
         }}
       />
     </Tabs>

@@ -68,7 +68,7 @@ export default function index() {
   }, []);
 
   return (
-    <SafeAreaView>
+    <SafeAreaView style={{ marginBottom: 12 }}>
       {/* Header */}
       <View style={{ padding: 18, flex: 1, marginVertical: 18 }}>
         <View
